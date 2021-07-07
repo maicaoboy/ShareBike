@@ -4,19 +4,15 @@ import java.util.Calendar;
 
 //使用记录
 public class UsingRecord {
-    //使用单车用户ID
-    int userID;
+    int userID;                 //使用单车用户ID
 
-    int money;
+    int money;                  //订单金额
 
-    //被使用单车ID
-    int bikeID;
+    int bikeID;                  //被使用单车ID
 
-    //使用开始时间
-    Calendar beginTime;
+    Calendar beginTime;             //使用开始时间
 
-    //使用结束时间
-    Calendar endTime;
+    Calendar endTime;               //使用结束时间
 
     public int getUserID() {
         return userID;
@@ -73,6 +69,8 @@ public class UsingRecord {
         return "{\"UsingRecord\":{"
                 + "\"userID\":"
                 + userID
+                + ",\"money\":"
+                + money
                 + ",\"bikeID\":"
                 + bikeID
                 + ",\"beginTime\":"

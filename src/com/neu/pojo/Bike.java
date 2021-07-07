@@ -1,19 +1,15 @@
 package com.neu.pojo;
 
-import com.neu.dao.impl.UsingRecordDao;
-
-import java.util.Calendar;
-import java.util.Objects;
-import java.util.Random;
+/**
+ * 单车类
+ */
 
 public class Bike {
     //单车ID,数值范围10000000-99999999
-    private int ID;
+    private int ID;                                 //单车ID
     private static int idRecord = 10000000;
-
-    //单车状态,0-车辆正常并且空闲，1-使用中，2-维修状态，3-报废状态
-    private int state;
-    private UsingRecord record;
+    private int state;                              //单车状态,0-车辆正常并且空闲，1-使用中，2-维修状态，3-报废状态
+    private UsingRecord record;                     //单车使用记录
 
     public static void setIdRecord(int idRecord) {
         Bike.idRecord = idRecord;
@@ -24,36 +20,25 @@ public class Bike {
     }
 
 
-
-    public int getID() {
-        return ID;
-    }
-
-    public Bike(int id) {
-        this.ID = id;
+    public Bike() {
+        this.ID = idRecord;
         state = 0;
         idRecord++;
         record = null;
     }
 
-    public Bike() { }
-
-    /**
-     * 构造函数
-     */
     public Bike(int ID, int state) {
         this.ID = ID;
         this.state = state;
     }
 
-    /**
-     * setter和getter
-     * @param ID
-     */
+    public int getID() {
+        return ID;
+    }
+
     public void setID(int ID) {
         this.ID = ID;
     }
-
 
     public int getState() {
         return state;
@@ -71,6 +56,7 @@ public class Bike {
         return record;
     }
 
+    //重写equals方法，以ID验证
     @Override
     public boolean equals(Object o) {
         Bike bike = (Bike) o;

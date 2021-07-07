@@ -23,32 +23,23 @@ public class Customer {
 
     public Customer(){}
 
-    //用户名
-    private String name;
+    private String name;                     //用户名
 
-    //用户ID
-    private int ID;
+    private int ID;                          //用户ID
 
-    //密码
-    private String password;
+    private String password;                //密码
 
-    //余额
-    private double money;
+    private double money;                   //余额
 
-    //正在使用的单车
-    private Bike usingBike;
+    private Bike usingBike;                 //正在使用的单车
 
-    //身份证
-    private String identity;
+    private String identity;                //身份证
 
-    //手机号
-    private String phoneNumber;
+    private String phoneNumber;             //手机号
 
-    //注册时间
-    private Calendar registerTime;
+    private Calendar registerTime;          //注册时间
 
-    //单车借出时间
-    private Calendar lendTime;
+    private Calendar lendTime;               //单车借出时间
 
 
     public void setLendTime(Calendar lendTime) {
@@ -123,6 +114,7 @@ public class Customer {
         this.registerTime = registerTime;
     }
 
+    //以名字和密码验证用户
     @Override
     public boolean equals(Object o) {
         Customer customer = (Customer) o;

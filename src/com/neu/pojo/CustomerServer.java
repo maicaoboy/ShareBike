@@ -3,14 +3,11 @@ package com.neu.pojo;
 import java.util.Objects;
 
 public class CustomerServer {
-    //客服名称
-    private String name;
+    private String name;                //客服名称
 
-    //客服工号
-    private int workID;
+    private int workID;                 //客服工号
 
-    //客服密码
-    private String password;
+    private String password;             //客服密码
 
     public CustomerServer(String name, int workID, String password) {
         this.name = name;

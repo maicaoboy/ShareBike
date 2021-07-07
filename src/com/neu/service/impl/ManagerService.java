@@ -9,15 +9,29 @@ import com.neu.pojo.Partner;
 import com.neu.service.IManagerService;
 import com.neu.view.SystemUI;
 
+/**
+ * 管理员业务
+ */
+
 public class ManagerService implements IManagerService {
     static IPartnerDao partnerDao;
     static ICustomerDao customerDao;
+    private static ManagerService instance;
 
-    static {
+    public static ManagerService getInstance() {
+        if(instance == null) {
+            instance = new ManagerService();
+        }
+        return instance;
+    }
+
+    private ManagerService() {
         partnerDao = PartnerDao.getInstance();
         customerDao = CustomerDao.getInstance();
     }
 
+
+    //添加单车管理合作方
     @Override
     public void addPartner() {
         boolean result = true;
@@ -35,6 +49,7 @@ public class ManagerService implements IManagerService {
         SystemUI.addPartnerReminder(result,newOne);
     }
 
+    //删除单车管理合作方
     @Override
     public void deletePartner() {
         int i = 0;
@@ -54,6 +69,7 @@ public class ManagerService implements IManagerService {
         SystemUI.deletePartnerReminder(result,partner);
     }
 
+    //删除用户
     @Override
     public void deleteCustomer() {
         int i = 0;
@@ -67,6 +83,7 @@ public class ManagerService implements IManagerService {
         for(Customer customer1 : customerDao.getCustomers()) {
             if (customer1.getID() == delete) {
                 customerDao.getCustomers().remove(customer1);
+                customerDao.storeCustomer();
                 result = true;
                 break;
             }

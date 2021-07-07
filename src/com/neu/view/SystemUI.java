@@ -9,7 +9,6 @@ import com.neu.service.IPartnerService;
 import com.neu.service.impl.BikeService;
 import com.neu.service.impl.ManagerService;
 import com.neu.service.impl.PartnerService;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,9 +19,9 @@ public class SystemUI {
     static IPartnerService partnerService;
 
     static{
-        bikeService = new BikeService();
-        managerService = new ManagerService();
-        partnerService = new PartnerService();
+        bikeService = BikeService.getInstance();
+        managerService = ManagerService.getInstance();
+        partnerService = PartnerService.getInstance();
     }
 
     public static void main(String[] args) {
@@ -48,6 +47,7 @@ public class SystemUI {
                             default -> {}
                         }
                         if(choose2 == 0){
+                            bikeService.logout();
                             break;
                         }
                     }
@@ -59,12 +59,48 @@ public class SystemUI {
                         choose3 = getInt("请选择");
                         switch(choose3) {
                             case 1 ->  {
-
+                                while(true) {
+                                    int choose4 = 0;
+                                    partnerPanel();
+                                    choose4 = getInt("请选择");
+                                    switch(choose4) {
+                                        case 1 -> partnerService.login();
+                                        case 2 -> partnerService.releaseBike();
+                                        case 3 -> {
+                                            partnerService.fixBike();
+                                        }
+                                    }
+                                    if(choose4 == 0){
+                                        partnerService.logout();
+                                        break;
+                                    }
+                                    }
                             }
                             case 2 -> {
-
-                            }
-                            case 3 -> {
+                                while(true){
+                                    System.out.println("");
+                                    int password = SystemUI.getInt("输入密码（0退出）");
+                                    if(password == 0) {
+                                        break;
+                                    }else if(password == 12345678) {
+                                        System.out.println("登陆成功");
+                                        manager();
+                                        while(true) {
+                                            int choose5 = 0;
+                                            choose5 = getInt("输入选择");
+                                            switch(choose5) {
+                                                case 1 -> managerService.addPartner();
+                                                case 2 -> managerService.deletePartner();
+                                                case 3 -> managerService.deleteCustomer();
+                                            }
+                                            if(choose5 == 0) {
+                                                break;
+                                            }
+                                        }
+                                    }else{
+                                        continue;
+                                    }
+                                }
 
                             }
                             default -> {
@@ -78,6 +114,16 @@ public class SystemUI {
             }
 
         }
+    }
+
+    private static void manager() {
+        System.out.println("1.新增合作方     2.删除合作方    3.删除用户");
+        System.out.println("0.返回");
+    }
+
+    private static void partnerPanel() {
+        System.out.println("1.登录    2.投放单车    3.修理单车");
+        System.out.println("0.退出");
     }
 
     static void mainPanel() {
@@ -180,9 +226,11 @@ public class SystemUI {
     }
 
     public static void showABike(Bike bike, int j) {
-        System.out.println("您附近可用的单车有：");
+        if(j == 0) {
+            System.out.println("您附近可用的单车有：");
+        }
         if(bike.getState() == 0 || bike.getState() == 1) {
-            System.out.println(bike);
+            System.out.println("Bike：" + bike.getID());
         }
     }
 
@@ -198,7 +246,7 @@ public class SystemUI {
     public static void backBikeReminder(int i, int hour, Customer user) {
         //0-还车成功，1-用户未登录，2-没有订单，3-余额不足
         switch(i) {
-            case 0 -> System.out.println("还车成功");
+            case 0 -> System.out.println("还车成功,本次消费" + (hour + 1) +  "元,您的账户还剩" + user.getMoney() + "元");
             case 1 -> System.out.println("用户未登录，请登录后再使用");
             case 2 -> System.out.println("你没有进行中的订单");
             case 3 -> System.out.println("本次订单需支付" + (hour + 1) + " 元,您的账户余额" + user.getMoney() + "元，余额不足");
@@ -271,7 +319,7 @@ public class SystemUI {
         int i = 1;
         for(Bike bike : bikes) {
             if(bike.getState() == 2) {
-                System.out.println("车辆1:" + bike.getID());
+                System.out.println("车辆:" + bike.getID());
             }
         }
     }
@@ -289,11 +337,31 @@ public class SystemUI {
         if(fix == null) {
             System.out.println("未找到单车" + choose);
         }else {
-            if(fix.getState() == 0) {
+            if(fix.getState() == 0 || fix.getState() == 1) {
                 System.out.println("单车" + choose + "维修成功");
             }else {
                 System.out.println("单车" + choose + "维修失败，报废了");
             }
+        }
+    }
+
+    public static void fixReminder1(Bike fix, int choose) {
+        if(fix == null) {
+            System.out.println("未找到单车" + choose);
+        }else {
+                System.out.println("单车" + choose + "报修成功");
+        }
+    }
+
+    public static void addBikeReminder(Bike bike) {
+        System.out.println("添加单车：" + bike.getID());
+    }
+
+    public static void releaseBikeReminder(int result, int add) {
+        switch (result) {
+            case 0 -> System.out.println("添加了" + add + "辆单车");
+            case 1 -> System.out.println("已经达到投放密度，无需再投放单车");
+            case 2 -> System.out.println("请先维修单车再投放");
         }
     }
 }

@@ -3,13 +3,15 @@ package com.neu.dao.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neu.dao.IUsingRecordDao;
-import com.neu.pojo.CustomerServer;
 import com.neu.pojo.UsingRecord;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * 使用记录操作文件
+ */
 
 public class UsingRecordDao implements IUsingRecordDao {
     private ArrayList<UsingRecord> records;
@@ -21,6 +23,7 @@ public class UsingRecordDao implements IUsingRecordDao {
         }
         return instance;
     }
+
 
     private UsingRecordDao() {
         records = new ArrayList<UsingRecord>();
@@ -36,18 +39,20 @@ public class UsingRecordDao implements IUsingRecordDao {
     }
 
 
+    //添加使用记录文件
     @Override
     public void addUsingRecord(UsingRecord record) {
         records.add(record);
     }
 
+    //保存使用记录
     @Override
     public void storeUsingRecord() {
         try {
             File file = new File("UsingRecords.json");
             if(file.exists()) {
                 ObjectMapper om = new ObjectMapper();
-                om.writeValue(file,records);;
+                om.writeValue(file,records);
             }
 
         }catch(IOException ioe) {

@@ -1,1 +1,1 @@
-[{"name":"lhb","password":"2012","money":8444.0,"usingBike":null,"identity":"2012","phoneNumber":"2012","registerTime":1625582171208,"lendTime":null,"id":8051}]
+[{"name":"lhb","password":"2012","money":98.0,"usingBike":{"state":1,"record":{"userID":6616,"bikeID":10000007,"beginTime":1625651402921,"endTime":1625651402921},"id":10000007},"identity":"1234","phoneNumber":"1234","registerTime":1625650763509,"lendTime":null,"id":6616}]

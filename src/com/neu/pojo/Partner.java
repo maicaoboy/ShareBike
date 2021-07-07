@@ -6,11 +6,9 @@ import java.util.Objects;
  * 合作方
  */
 public class Partner {
-    //合作方名字
-    private String name;
+    private String name;            //合作方名字
 
-    //合作方密码
-    private String password;
+    private String password;        //合作方密码
 
 
     public Partner(String name, String password) {
