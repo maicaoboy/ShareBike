@@ -9,6 +9,8 @@ import com.neu.service.IPartnerService;
 import com.neu.service.impl.BikeService;
 import com.neu.service.impl.ManagerService;
 import com.neu.service.impl.PartnerService;
+import com.neu.utils.Util;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -19,9 +21,9 @@ public class SystemUI {
     static IPartnerService partnerService;
 
     static{
-        bikeService = BikeService.getInstance();
-        managerService = ManagerService.getInstance();
-        partnerService = PartnerService.getInstance();
+        bikeService = (BikeService) Util.getObject("BikeService");
+        managerService = (ManagerService) Util.getObject("ManagerService");
+        partnerService = (PartnerService) Util.getObject("PartnerService");
     }
 
     public static void main(String[] args) {
