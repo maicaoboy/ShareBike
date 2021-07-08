@@ -7,6 +7,7 @@ import com.neu.dao.impl.PartnerDao;
 import com.neu.pojo.Customer;
 import com.neu.pojo.Partner;
 import com.neu.service.IManagerService;
+import com.neu.utils.Util;
 import com.neu.view.SystemUI;
 
 /**
@@ -26,8 +27,8 @@ public class ManagerService implements IManagerService {
     }
 
     private ManagerService() {
-        partnerDao = PartnerDao.getInstance();
-        customerDao = CustomerDao.getInstance();
+        partnerDao = (PartnerDao) Util.getObject("PartnerDao");
+        customerDao = (CustomerDao) Util.getObject("CustomerDao");
     }
 
 

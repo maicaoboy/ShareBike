@@ -10,6 +10,7 @@ import com.neu.pojo.Bike;
 import com.neu.pojo.Customer;
 import com.neu.pojo.UsingRecord;
 import com.neu.service.IBikeService;
+import com.neu.utils.Util;
 import com.neu.view.SystemUI;
 import java.util.Calendar;
 
@@ -31,9 +32,9 @@ public class BikeService implements IBikeService {
     }
 
     private BikeService() {
-        bikeDao = BikeDao.getInstance();
-        customerDao = CustomerDao.getInstance();
-        usingRecordDao = UsingRecordDao.getInstance();
+        bikeDao = (BikeDao)Util.getObject("BikeDao");
+        customerDao = (CustomerDao)Util.getObject("CustomerDao");
+        usingRecordDao = (UsingRecordDao)Util.getObject("UsingRecordDao");
     }
 
 
@@ -110,8 +111,8 @@ public class BikeService implements IBikeService {
                 i = 3;
             }else {
                 //判断用户已登陆，有用车，余额充足允许还车
-                hour = (int)(customerDao.getCurrentCustomer().getUsingBike().getRecord().getBeginTime().getTimeInMillis()
-                        - backTime.getTimeInMillis())/(1000*3600);
+                hour = (int)(backTime.getTimeInMillis() - customerDao.getCurrentCustomer().getUsingBike().
+                        getRecord().getBeginTime().getTimeInMillis())/(1000*3600);
                 customerDao.getCurrentCustomer().setMoney(customerDao.getCurrentCustomer().getMoney() - 1 - hour);
                 customerDao.getCurrentCustomer().getUsingBike().getRecord().setEndTime(backTime);
                 usingRecordDao.addUsingRecord(customerDao.getCurrentCustomer().getUsingBike().getRecord());

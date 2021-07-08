@@ -7,6 +7,7 @@ import com.neu.dao.impl.PartnerDao;
 import com.neu.pojo.Bike;
 import com.neu.pojo.Partner;
 import com.neu.service.IPartnerService;
+import com.neu.utils.Util;
 import com.neu.view.SystemUI;
 
 /**
@@ -28,8 +29,8 @@ public class PartnerService implements IPartnerService {
     private PartnerService () {}
 
     static{
-        bikeDao = BikeDao.getInstance();
-        partnerDao = PartnerDao.getInstance();
+        bikeDao = (BikeDao) Util.getObject("BikeDao");
+        partnerDao = (PartnerDao) Util.getObject("PartnerDao");
     }
 
 
